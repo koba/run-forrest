@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "sdkVersion": "26.0.0",
+    "name": "RunForrest",
+    "android": {
+      "package": "com.koba.runforrest"
+    }
+ }
+}
