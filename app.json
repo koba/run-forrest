@@ -4,6 +4,9 @@
     "name": "RunForrest",
     "android": {
       "package": "com.koba.runforrest"
+    },
+    "ios": {
+      "bundleIdentifier": "com.koba.runforrest"
     }
  }
 }
