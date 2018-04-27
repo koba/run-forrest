@@ -4,4 +4,6 @@ Run Forrest es una plataforma que organiza y gestiona carreras virtuales, para q
 
 ### Screenshot
 
-![](docs/screenshot.png)
+<p align="center">
+    <img src="docs/screenshot.png" />
+</p>
