@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ProgressBarAndroid, Platform } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, ProgressBarAndroid, ProgressViewIOS, Platform } from 'react-native';
+import { Button } from 'react-native-elements';
 import Socket from 'socket.io-client';
 
 import runsService from '../services/runs';
+
+import { darkTheme } from '../themes';
 
 export default class RunDetail extends React.Component {
     constructor() {
@@ -10,7 +13,8 @@ export default class RunDetail extends React.Component {
         this.state = {
             Progress_Value: 0.00,
             Latitude: 0,
-            Longitude: 0
+            Longitude: 0,
+            time: new Date()
         }
 
         var socket = Socket('http://agurz.ddns.net:52982');
@@ -18,7 +22,6 @@ export default class RunDetail extends React.Component {
         setInterval(() => {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    console.log(position);
                     this.setState({
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
@@ -52,16 +55,31 @@ export default class RunDetail extends React.Component {
     render() {
         this.Start_Progress();
         return (
-            <View>
-                <View>
-                    <Text style={styles.text1}>San Fernando </Text>
+            <ImageBackground source={require('../themes/assets/background.png')} style={darkTheme.imageBackground}>
+                <View style={{ paddingTop: 12 }}>
+                    <Text style={{ ...darkTheme.text, textAlign: 'left', padding: 8 }}>Actualmente corriendo</Text>
+                    <Text style={{ ...darkTheme.title, backgroundColor: 'rgb(33, 90, 128)' }}>BOSTON</Text>
                 </View>
                 <View>
-                    <Text style={styles.text2}> Posición: 1 </Text>
+                    <Text style={{ ...darkTheme.text }}>Posición</Text>
+                    <Text style={{ ...darkTheme.text, fontSize: 148 }}>1</Text>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+                    <View style={{ marginRight: 32 }}>
+                        <Text style={{ ...darkTheme.text }}>tiempo</Text>
+                        <Text style={{ ...darkTheme.textBold }}>{this.state.time.toTimeString().substr(0, 8)}</Text>
+                    </View>
+                    <View style={{ marginRight: 32 }}>
+                        <Text style={{ ...darkTheme.text }}>km</Text>
+                        <Text style={{ ...darkTheme.textBold }}>{'2.47'}</Text>
+                    </View>
+                    <View>
+                        <Text style={{ ...darkTheme.text }}>paso</Text>
+                        <Text style={{ ...darkTheme.textBold }}>{'5 km/m'}</Text>
+                    </View>
                 </View>
                 <View>
-                    <Text style={styles.text3}> Recorridos: 7.5 Km  </Text>
-                    <Text style={{ fontSize: 20, color: '#000' }}> Progress Value: {parseFloat((this.state.Progress_Value * 100).toFixed(3))} %</Text>
+                    <Text style={{ ...darkTheme.text, textAlign: 'left' }}> Progress Value: {parseFloat((this.state.Progress_Value * 100).toFixed(3))} %</Text>
                     {
                         (Platform.OS === 'android')
                             ?
@@ -70,27 +88,7 @@ export default class RunDetail extends React.Component {
                             (<ProgressViewIOS progress={this.state.Progress_Value} />)
                     }
                 </View>
-            </View>
+            </ImageBackground>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    text1: {
-        fontWeight: 'bold',
-        fontSize: 30,
-        textAlign: 'center',
-        marginBottom: 120,
-    },
-    text2: {
-        fontWeight: 'bold',
-        fontSize: 40,
-        textAlign: 'center',
-        marginBottom: 120,
-    },
-    text3: {
-        fontSize: 25,
-        textAlign: 'center',
-        marginBottom: 170,
-    },
-});
