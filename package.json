@@ -12,6 +12,7 @@
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
+    "android-emulator": "~/Library/Android/sdk/emulator/emulator -avd Android_Accelerated_Nougat &",
     "ios": "react-native-scripts ios",
     "test": "jest"
   },
